@@ -12,9 +12,8 @@
 #!.yarn/cache
 .pnp.*
 
-/src/generated/prisma
+/src/config/db/generated/prisma
 
 node_modules
 
 .env
-.yarn
