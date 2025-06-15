@@ -9,5 +9,5 @@ export class UserInputParams extends InputParams<UserFilter> {}
 
 export class UserOutputParams extends OuputParams<UserEntity> {}
 
-export interface UserRepository
+export interface IUserRepository
   extends IRepository<string, UserEntity, UserInputParams, UserOutputParams> {}
