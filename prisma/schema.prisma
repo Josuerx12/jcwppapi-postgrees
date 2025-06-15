@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/config/db/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Personal {
+  id  String @id
+  cpf String @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User[]
+
+  @@map("personal_infos")
+}
+
+model Company {
+  id     String  @id
+  cnpj   String  @unique
+  holder String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User[]
+
+  @@map("company_infos")
+}
+
+model User {
+  id          String  @id @default(uuid())
+  plan_id     String
+  personal_id String? @unique
+  company_id  String? @unique
+
+  name      String
+  email     String    @unique
+  phone     String
+  password  String
+  birthdate DateTime?
+  active    Boolean   @default(false)
+
+  plan      Plan       @relation(fields: [plan_id], references: [id])
+  personal  Personal?  @relation(fields: [personal_id], references: [id])
+  company   Company?   @relation(fields: [company_id], references: [id])
+  instances Instance[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("users")
+}
+
+model ActivateCode {
+  id      String    @id
+  user_id String    @unique
+  code    String    @unique
+  used_at DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model RecoveryCode {
+  id      String    @id
+  user_id String    @unique
+  code    String    @unique
+  used_at DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("recovery_codes")
+}
+
+model Instance {
+  id        String @id
+  user_id   String
+  auth_path String
+
+  user User @relation(fields: [user_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("instances")
+}
+
+model Plan {
+  id                String @id
+  stripe_product_id String @unique
+  name              String
+  slug              String @unique
+  instance_limit    Int
+  price             Int
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  User       User[]
+
+  @@map("plans")
+}
