@@ -8,40 +8,40 @@ import { PlanEntity } from "../../../plan/domain/entities/plan.entity";
 
 export type UserEntityProps = {
   id?: string;
-  personalId?: string;
-  companyId?: string;
+  personalId?: string | null;
+  companyId?: string | null;
 
   planId: string;
   name: string;
   email: string;
   phone: string;
-  birthdate?: Date;
+  birthdate?: Date | null;
   password?: string;
   active?: boolean;
 
-  personal?: PersonalEntity;
-  company?: CompanyEntity;
-  instances?: InstanceEntity[];
-  plan: PlanEntity;
+  personal?: PersonalEntity | null;
+  company?: CompanyEntity | null;
+  instances?: InstanceEntity[] | null;
+  plan?: PlanEntity | null;
 
   createdAt?: Date;
   updatedAt?: Date;
 };
 
 export class UserEntity extends Entity {
-  personalId?: string;
-  companyId?: string;
+  personalId?: string | null;
+  companyId?: string | null;
   planId: string;
   name: string;
   email: string;
   phone: PhoneVo;
-  birthdate?: Date;
-  password?: string;
+  birthdate?: Date | null;
+  password: string;
   active?: boolean;
-  personal?: PersonalEntity;
-  company?: CompanyEntity;
-  instances?: InstanceEntity[];
-  plan: PlanEntity;
+  personal?: PersonalEntity | null;
+  company?: CompanyEntity | null;
+  instances?: InstanceEntity[] | null;
+  plan?: PlanEntity | null;
 
   constructor(props: UserEntityProps) {
     super(props);

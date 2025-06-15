@@ -4,7 +4,7 @@ import { UserEntity } from "../../../user/domain/entities/user.entity";
 export type PlanEntityProps = {
   id?: string;
 
-  stripeProductId: String;
+  stripeProductId: string;
   name: string;
   slug: string;
   intanceLimit: number;
@@ -17,7 +17,7 @@ export type PlanEntityProps = {
 };
 
 export class PlanEntity extends Entity {
-  stripeProductId: String;
+  stripeProductId: string;
   name: string;
   slug: string;
   intanceLimit: number;
